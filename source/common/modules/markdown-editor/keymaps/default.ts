@@ -280,6 +280,9 @@ export function mainEditorKeybindings (customShortcutMap: CustomEditorShortcut[]
     { key: 'Mod-f', run: openSearchPanel, scope: 'editor search-panel' },
     { key: sc('search-find-next'), run: findNext, scope: 'editor search-panel', preventDefault: true },
     { key: sc('search-find-previous'), run: findPrevious, scope: 'editor search-panel', preventDefault: true },
+    // CodeMirror's own searchKeymap also binds F3 and Shift-F3, so keep them
+    // alongside the customizable shortcuts.
+    { key: 'F3', run: findNext, shift: findPrevious, scope: 'editor search-panel', preventDefault: true },
     { key: sc('search-select-matches'), run: selectSelectionMatches },
     { key: sc('search-go-to-line'), run: gotoLine },
     { key: sc('search-select-next'), run: selectNextOccurrence, preventDefault: true },
