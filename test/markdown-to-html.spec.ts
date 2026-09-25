@@ -85,9 +85,34 @@ And some text.</p>`
     output: '<p>Status One of {Active, Pending Approval, Removed}</p>'
   },
   {
-    description: 'Keeps consuming the unnumbered-heading shorthand {-}',
+    description: 'Treats the shorthand {-} like {.unnumbered}',
     input: '# Heading {-}',
-    output: '<h1> Heading </h1>'
+    output: '<h1 class="unnumbered"> Heading </h1>'
+  },
+  {
+    description: 'Escapes double quotes from single-quoted attribute values',
+    input: "# H {key='a\"b'}",
+    output: '<h1 key="a&quot;b"> H </h1>'
+  },
+  {
+    description: 'Keeps braces with an unterminated single quote literal',
+    input: "Text {key='x y}",
+    output: "<p>Text {key='x y}</p>"
+  },
+  {
+    description: 'Accepts a class, a single-quoted value, and {-} together',
+    input: "# H {.a key='x y' -}",
+    output: '<h1 class="a unnumbered" key="x y"> H </h1>'
+  },
+  {
+    description: 'Keeps long unquoted-value lookalikes literal without backtracking',
+    input: 'Text {' + 'a='.repeat(40) + '"}',
+    output: '<p>Text {' + 'a='.repeat(40) + '"}</p>'
+  },
+  {
+    description: 'Does not treat {--} as unnumbered',
+    input: 'Text {--}',
+    output: '<p>Text {--}</p>'
   },
   {
     description: 'Keeps consuming the raw-format shorthand {=html}',
