@@ -110,14 +110,19 @@ And some text.</p>`
     output: '<p>Text {' + 'a='.repeat(40) + '"}</p>'
   },
   {
-    description: 'Does not treat {--} as unnumbered',
-    input: 'Text {--}',
-    output: '<p>Text {--}</p>'
+    description: 'Treats {--} like {-}, as Pandoc does',
+    input: '# Heading {--}',
+    output: '<h1 class="unnumbered"> Heading </h1>'
   },
   {
-    description: 'Keeps consuming the raw-format shorthand {=html}',
+    description: 'Accepts attributes without whitespace between them',
+    input: '# H {-.a#b}',
+    output: '<h1 id="b" class="unnumbered a"> H </h1>'
+  },
+  {
+    description: 'Keeps the raw-format syntax {=html} literal outside code',
     input: 'Some text {=html}',
-    output: '<p>Some text </p>'
+    output: '<p>Some text {=html}</p>'
   },
   {
     description: 'Keeps consuming empty Pandoc attribute braces {}',

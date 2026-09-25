@@ -32,9 +32,11 @@ const tests: Array<{ input: string, output: ParsedPandocAttributes|'logs-error' 
   { input: '{#fig:overview}', output: { id: 'fig:overview' } }, // IDs may contain colons (e.g., pandoc-crossref)
   { input: "{key='a\"b'}", output: { properties: { key: 'a"b' } } }, // Single-quoted values may contain double quotes
   { input: "{.a key='x y' -}", output: { classes: [ 'a', 'unnumbered' ], properties: { key: 'x y' } } }, // Mixed forms
-  { input: '{--}', output: {} }, // Only a bare `-` means unnumbered
+  { input: '{--}', output: { classes: ['unnumbered'] } }, // Any run of `-` means unnumbered, like in Pandoc
   { input: '{.fig.wide}', output: { classes: ['fig.wide'] } }, // Classes may contain dots, like in Pandoc
-  { input: '{-x}', output: {} }, // Only a bare `-` means unnumbered
+  { input: '{-x}', output: {} }, // `-` followed by other text is not unnumbered
+  { input: '{--x}', output: {} }, // Same for a longer run of `-`
+  { input: '{-.foo#bar .foo -}', output: { id: 'bar', classes: [ 'unnumbered', 'foo', 'foo', 'unnumbered' ] } }, // No whitespace needed between attributes
   {
     // Longer test with all available classes
     input: '#some-id .class1 .class2 width=50% height=25 disabled=false style="font-size: 12px;"',
