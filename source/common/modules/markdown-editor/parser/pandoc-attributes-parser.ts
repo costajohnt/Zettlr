@@ -24,11 +24,6 @@ import { pandocAttributeRe } from 'source/common/pandoc-util/parse-pandoc-attrib
 
 const PandocAttributeDelimiter: DelimiterType = {}
 
-// A valid Pandoc attribute list is made up of any number of whitespace-separated
-// tokens that parsePandocAttributes understands, or the `=format` raw
-// attribute, or is empty. Requiring the separator keeps this linear: with an
-// optional separator, input like `a=a=a=…"` backtracks exponentially. Anything else (e.g. free-form text) is not a Pandoc attribute and
-// must be left as literal text instead of being consumed.
 const attributeContentRE = new RegExp(`^\\s*(?:(?:${pandocAttributeRe.source}|=[\\w\\-]+)(?:\\s+|$))*$`)
 
 /**

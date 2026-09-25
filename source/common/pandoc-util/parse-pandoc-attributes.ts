@@ -92,11 +92,18 @@ export function parsePandocAttributes (attrString: string): ParsedPandocAttribut
       parsed.id = match.groups.id
     }
 
-    if (match.groups.class || match.groups.unnumbered) {
+    if (match.groups.class) {
       if (parsed.classes === undefined) {
         parsed.classes = []
       }
-      parsed.classes.push(match.groups.class ?? 'unnumbered')
+      parsed.classes.push(match.groups.class)
+    }
+
+    if (match.groups.unnumbered) {
+      if (parsed.classes === undefined) {
+        parsed.classes = []
+      }
+      parsed.classes.push('unnumbered')
     }
 
     if (match.groups.attr) {
